@@ -1,0 +1,185 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: ERPSingleData.spec.ts >> ERP Inventroy Management >> StockItems
+- Location: tests\ERPSingleData.spec.ts:51:9
+
+# Error details
+
+```
+Test timeout of 30000ms exceeded.
+```
+
+```
+Error: locator.waitFor: Test timeout of 30000ms exceeded.
+Call log:
+  - waiting for locator('text=Add').first() to be visible
+    56 × locator resolved to hidden <a href="breadcrumblinksaddsp.php">Add New Breadcrumb Links</a>
+    - locator resolved to hidden <button type="button" class="btn btn-primary ewButton">Add</button>
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=f3e2]:
+  - generic [ref=f3e3]:
+    - link "Stock Accounting" [ref=f3e6] [cursor=pointer]:
+      - /url: .
+    - strong [ref=f3e9]: Stock Accounting
+  - text:       
+  - generic [ref=f3e13]:
+    - list [ref=f3e14]:
+      - listitem [ref=f3e15]:
+        - link " Help (Categories)" [ref=f3e16] [cursor=pointer]:
+          - /url: help_categorieslist.php
+          - generic [ref=f3e17]: 
+          - text: Help (Categories)
+        - text:   
+      - listitem [ref=f3e19]:
+        - link " Login" [ref=f3e20] [cursor=pointer]:
+          - /url: login.php
+          - generic [ref=f3e21]: 
+          - text: Login
+    - list
+  - generic [ref=f3e24]:
+    - generic [ref=f3e27]:
+      - generic [ref=f3e28] [cursor=pointer]:
+        - radio "en" [checked]
+        - text: en
+      - generic [ref=f3e29] [cursor=pointer]:
+        - radio "id"
+        - text: id
+    - generic:  
+  - generic [ref=f3e32]:
+    - text: ©2015
+    - link "Masino Sinaga" [ref=f3e33] [cursor=pointer]:
+      - /url: http://www.ilovephpmaker.com
+    - text: . All rights reserved. |
+    - link "Terms and Conditions" [ref=f3e34] [cursor=pointer]:
+      - /url: javascript:void(0);
+    - text: "|"
+    - link "About Us" [ref=f3e35] [cursor=pointer]:
+      - /url: javascript:void(0);
+    - text: "|"
+    - link "Back to Top" [ref=f3e36] [cursor=pointer]:
+      - /url: javascript:void(0);
+```
+
+# Test source
+
+```ts
+  1   | import { expect, Locator, Page } from "@playwright/test"
+  2   | 
+  3   | export class StockItemsPage{
+  4   | 
+  5   |     //declare properties for suppliers
+  6   |     page:Page
+  7   |     readonly clickStockItemsLink:Locator
+  8   |     //readonly clickstockcategoryLink:Locator
+  9   |     //readonly clickunitofmeasurementLink:Locator
+  10  |     readonly clickAddIcon:Locator
+  11  |     readonly clickCategory:Locator
+  12  |     readonly clickSupplierNumber:Locator
+  13  |     readonly clickStockNumber:Locator
+  14  |     readonly clickStockName:Locator
+  15  |     readonly UnitOfMeasurement:Locator
+  16  |     readonly PurchasingPrice:Locator
+  17  |     readonly SellingPrice:Locator
+  18  |     readonly Notes:Locator
+  19  |     readonly clickAddButton:Locator
+  20  |     readonly clickConformOk:Locator
+  21  |     readonly clickAlertOk: Locator
+  22  |     readonly searchPanel:Locator
+  23  |     readonly searchTextbox: Locator
+  24  |     readonly seacrhButton :Locator
+  25  |     private expNumber!: string
+  26  | 
+  27  |     constructor(page:Page)
+  28  |     {
+  29  |         this.page=page
+  30  |         this.clickStockItemsLink = page.locator('#mi_a_stock_items')
+  31  |         this.clickAddIcon = page.locator("text=Add")
+  32  | 
+  33  |         this.clickCategory=page.locator('#elh_a_stock_items_Category')
+  34  |         this.clickSupplierNumber=page.locator('#elh_a_stock_items_Supplier_Number')
+  35  |         this.clickStockNumber=page.locator("#elh_a_stock_items_Stock_Number")
+  36  |         this.clickStockName=page.locator('#elh_a_stock_items_Stock_Name')
+  37  |         this.UnitOfMeasurement=page.locator('#elh_a_stock_items_Unit_Of_Measurement')
+  38  |         this.PurchasingPrice=page.locator('#elh_a_stock_items_Purchasing_Price')
+  39  |         this.SellingPrice=page.locator('#elh_a_stock_items_Selling_Price')
+  40  |         this.Notes=page.locator('#elh_a_stock_items_Notes')
+  41  |         this.clickAddButton = page.locator("text=Add")
+  42  |         this.clickConformOk = page.locator("text=OK")
+  43  |         this.clickAlertOk = page.locator("text=OK")
+  44  |         this.searchPanel = page.locator("div.search-panel")
+  45  |         this.searchTextbox = page.locator("input[placeholder='Search...']")
+  46  |         this.seacrhButton = page.locator("text=Search")
+  47  |     }
+  48  |      //method for navigate to Stock Items page
+  49  |         async NavigateToStockItems()
+  50  |         {
+  51  |             await this.clickStockItemsLink.waitFor()
+  52  |             //await this.clickStockItemsLink.hover()
+  53  |             await this.clickStockItemsLink.click()
+> 54  |             await this.clickAddIcon.first().waitFor()
+      |                                             ^ Error: locator.waitFor: Test timeout of 30000ms exceeded.
+  55  |             await this.clickAddIcon.first().click()
+  56  |         }
+  57  | 
+  58  |      //Method for add category name
+  59  |         async AddCategoryName(category:string,supnumber:string,stnumber:string,stname:string,
+  60  |         measure:string,pprice:string,sprice:string,notes:string)
+  61  |         {
+  62  |             await this.clickCategory.waitFor()
+  63  |             await this.clickCategory.selectOption(category)
+  64  |             await this.clickSupplierNumber.selectOption(supnumber)
+  65  |             this.expNumber = await this.clickStockNumber.inputValue()
+  66  |             //await this.clickStockNumber.fill(stnumber)
+  67  |             await this.clickStockName.fill(stname)
+  68  |             await this.UnitOfMeasurement.selectOption(measure)
+  69  |             await this.PurchasingPrice.fill(pprice)
+  70  |             await this.SellingPrice.fill(sprice)
+  71  |             await this.Notes.fill(notes)
+  72  |             //this.expNumber = await this.clickStockNumber.inputValue()
+  73  |         
+  74  |         } 
+  75  |         
+  76  |          //method for confirm and alert dialog
+  77  |         async handleAlerts()
+  78  |         {
+  79  |             await this.clickConformOk.waitFor()
+  80  |             await this.clickConformOk.click()
+  81  |             await this.clickAlertOk.waitFor()
+  82  |             await this.clickAlertOk.click()
+  83  |         }
+  84  | 
+  85  |         //method for supplier table
+  86  |          async stockCategories() {
+  87  | 
+  88  |         if (!await this.searchTextbox.isVisible()) {
+  89  |             await this.searchPanel.click();
+  90  |         }
+  91  |          await this.searchTextbox.clear()
+  92  |         await this.searchTextbox.fill(this.expNumber)
+  93  | 
+  94  |         await this.seacrhButton.click();
+  95  | 
+  96  |         const categoryname =this.page.locator('#tbl_a_stock_categorieslist tbody tr',
+  97  |                 {
+  98  |                     hasText: this.expNumber
+  99  |                 })
+  100 | 
+  101 |         await expect(categoryname).toBeVisible();
+  102 | 
+  103 |         console.log(`Category Name Found in Table: ${this.expNumber}`)
+  104 |         await expect(categoryname).toContainText(this.expNumber)
+  105 |     }
+  106 | 
+  107 | }
+```
