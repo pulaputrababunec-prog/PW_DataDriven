@@ -1,10 +1,19 @@
 import {test} from '../hooks/ERPHooks'
+import { AdminLoginPage } from "../Pages/AdminLoginPage";
+import { AdminLogoutPage } from "../Pages/AdminLogoutPage";
 import { SuppliersPage } from '../Pages/SuppliersPage'
 import { CustomersPage } from '../Pages/CustomersPage'
 import { StockItemsPage } from '../Pages/StockItemsPage'
 import { ExcelFileUtil } from '../Utils/ExcelFileUtil'
 import path from 'path'
 
+let login: AdminLoginPage
+let sup: SuppliersPage
+let cus: CustomersPage
+let logout:AdminLogoutPage
+let st:StockItemsPage
+
+//declare varibales to store sheets
 let supSheet:any
 let cusSheet:any
 let stSheet:any
@@ -22,6 +31,12 @@ try {
 // console.log(supSheet)
 // console.log(cusSheet)
 //console.log(stSheet)
+// test.beforeEach(async({page})=>{
+//     login = new AdminLoginPage(page)
+//     await login.launchUrl(process.env.BASE_URL!)
+//     await (login as any).login(process.env.BASE_USER!,process.env.BASE_PASS!)
+// })
+
 test.describe('ERp Management Module',()=>{
 
     // for(const supdata of supSheet)
@@ -68,9 +83,9 @@ test.describe('ERp Management Module',()=>{
 
     // }
 
-    for(const [index,stdata] of stSheet.entries())
+    for(const stdata of stSheet)
     {
-      test(`Stock With Excel data ${stdata.Category} ${index+1}`,async({page})=>{
+      test(`Stock With Excel data ${stdata.Stockname}`,async({page})=>{
 
         const st = new StockItemsPage(page)
         await st.NavigateToStockItems()

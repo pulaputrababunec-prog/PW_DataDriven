@@ -1,0 +1,1 @@
+{"attachments":[],"errors":[{"message":"beforeEach hook failed: TypeError: login.login is not a function","trace":"TypeError: login.login is not a function\n    at C:\\Mahesh_Python\\FrameWork_POM\\tests\\usingExcleData.spec.ts:37:26","timestamp":1790175522884}]}

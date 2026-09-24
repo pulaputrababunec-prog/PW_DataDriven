@@ -5,8 +5,6 @@ export class StockItemsPage{
     //declare properties for suppliers
     page:Page
     readonly clickStockItemsLink:Locator
-    //readonly clickstockcategoryLink:Locator
-    //readonly clickunitofmeasurementLink:Locator
     readonly clickAddIcon:Locator
     readonly clickCategory:Locator
     readonly clickSupplierNumber:Locator
@@ -68,11 +66,16 @@ export class StockItemsPage{
         async AddCategoryName(category:string,supnumber:string,stnumber:string,stname:string,
         measure:string,pprice:string,sprice:string,notes:string)
         {
+            await this.clickCategory.click()
             await this.clickCategory.waitFor()
             await this.clickCategory.selectOption(category)
+             await this.clickSupplierNumber.click()
             await this.clickSupplierNumber.selectOption(supnumber)
+            await this.clickStockNumber.waitFor()
             this.expNumber = await this.clickStockNumber.inputValue()
             await this.clickStockName.fill(stname)
+            await this.UnitOfMeasurement.waitFor()
+            await this.UnitOfMeasurement.click()
             await this.UnitOfMeasurement.selectOption(measure)
             await this.PurchasingPrice.fill(pprice)
             await this.SellingPrice.fill(sprice)
