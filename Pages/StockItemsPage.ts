@@ -30,14 +30,14 @@ export class StockItemsPage{
         this.clickStockItemsLink = page.locator('#mi_a_stock_items')
         this.clickAddIcon = page.locator('span[data-caption="Add"]').first()
 
-        this.clickCategory=page.locator('#elh_a_stock_items_Category')
+        this.clickCategory=page.locator('#x_Category')
         this.clickSupplierNumber=page.locator('#elh_a_stock_items_Supplier_Number')
         this.clickStockNumber=page.locator("#elh_a_stock_items_Stock_Number")
         this.clickStockName=page.locator('#elh_a_stock_items_Stock_Name')
-        this.UnitOfMeasurement=page.locator('#elh_a_stock_items_Unit_Of_Measurement')
-        this.PurchasingPrice=page.locator('#elh_a_stock_items_Purchasing_Price')
-        this.SellingPrice=page.locator('#elh_a_stock_items_Selling_Price')
-        this.Notes=page.locator('#elh_a_stock_items_Notes')
+        this.UnitOfMeasurement=page.locator('select#x_Unit_Of_Measurement')
+        this.PurchasingPrice = page.locator('#x_Purchasing_Price')
+        this.SellingPrice = page.locator('#x_Selling_Price')
+        this.Notes=page.locator('#x_Notes')
         this.clickAddButton = page.locator('[type="submit"]')
         // this.clickConformOk = page.locator('button.ajs-button.btn.btn-primary')
         // this.clickAlertOk = page.locator('button.ajs-button.btn.btn-primary')
@@ -64,7 +64,7 @@ export class StockItemsPage{
 
      //Method for add category name
         async AddCategoryName(category:string,supnumber:string,stnumber:string,stname:string,
-        measure:string,pprice:string,sprice:string,notes:string)
+        item:string,pprice:any,sprice:any,notes:string)
         {
             await this.clickCategory.click()
             await this.clickCategory.waitFor()
@@ -76,9 +76,9 @@ export class StockItemsPage{
             await this.clickStockName.fill(stname)
             await this.UnitOfMeasurement.waitFor()
             await this.UnitOfMeasurement.click()
-            await this.UnitOfMeasurement.selectOption(measure)
-            await this.PurchasingPrice.fill(pprice)
-            await this.SellingPrice.fill(sprice)
+            await this.UnitOfMeasurement.selectOption(item)
+            await this.PurchasingPrice.fill(String(pprice))
+            await this.SellingPrice.fill(String(sprice))
             await this.Notes.fill(notes)
             await this.clickAddButton.click() 
         

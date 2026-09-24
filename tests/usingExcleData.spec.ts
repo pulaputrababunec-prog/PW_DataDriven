@@ -83,9 +83,12 @@ test.describe('ERp Management Module',()=>{
 
     // }
 
-    for(const stdata of stSheet)
-    {
-      test(`Stock With Excel data ${stdata.Stockname}`,async({page})=>{
+    // for(const stdata of stSheet)
+    // {
+    //   test(`Stock With Excel data ${stdata.Stockname}`,async({page})=>{
+
+    for (const [index, stdata] of stSheet.entries()) {
+         test(`Stock Test ${stdata.Category} ${index + 1}`,async({page})=>{
 
         const st = new StockItemsPage(page)
         await st.NavigateToStockItems()
